@@ -14,22 +14,25 @@ class m240912_191118_curso extends Migration
     {
         $this->createTable('curso', [
             'id' => $this->primaryKey(),
-            'ac' => $this->int(),
+            'ac_id' => $this->integer(),
             'nome' => $this->string(),
             'area' => $this->string(),
             'carga_horaria' => $this->double(),
-            'curso_id' => $this->int()
         ]);
+
+        $this->addForeignKey('ac_fk', 'curso', 'ac_id', 'ac', 'id','RESTRICT');
     }
+
+
+
 
     /**
      * {@inheritdoc}
      */
     public function safeDown()
     {
-        echo "m240912_191118_curso cannot be reverted.\n";
-
-        return false;
+       $this->dropForeignKey('ac_fk','ac');
+       $this->dropTable('curso');
     }
 
     /*

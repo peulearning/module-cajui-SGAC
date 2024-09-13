@@ -11,41 +11,39 @@ class m240912_190257_usuario extends Migration
      * {@inheritdoc}
      */
 
-    public function up()
+    public function safeUp()
     {
         $this->createTable('usuario', [
             'id' => $this->primaryKey(),
+            'curso_id' =>$this->integer()->notNull(),
             'login' => $this->string(),
             'senha' => $this->string(),
             'nome' => $this->string()->notNull(),
             'cpf' => $this->string(),
             'email' => $this->string(),
             'endereco' => $this->string()
+
         ]);
-        $this->addForeignKey(name, tableName, columns, refTable, refColumns, delete, update)
+
 
         $this->addForeignKey(
-            'fk-curso',
+            'curso_fk',
+            'usuario',
+            'curso_id',
             'curso',
-            curso_id,
-            usuario,
-            id
+            'id',
+            'RESTRICT'
         );
     }
 
-    public function safeUp()
-    {
-
-    }
 
     /**
      * {@inheritdoc}
      */
     public function safeDown()
     {
-        echo "m240912_190257_usuario cannot be reverted.\n";
-
-        return false;
+        $this->dropForeignKey('curso_fk', 'usuario');
+        $this->dropTable('usuario');
     }
 
     /*

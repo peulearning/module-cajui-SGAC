@@ -12,13 +12,42 @@ class m240912_195449_realizada extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('ac', [
-            'id' => $this->primaryKey(),
-            'nome'=> $this->string(),
-            'descricao' => $this->text(),
+        $this->createTable('realizada', [
+            'usuario_id' => $this->primaryKey(),
+            'curso_id' => $this->primaryKey(),
+            'ac_id' => $this->primaryKey(),
             'carga_horaria' => $this->double(),
-            'quantidade' => $this->int()
+            'documento' => $this->string()->notNull(),
+            'descricao' => $this->string(),
         ]);
+
+        $this->addForeignKey(
+            'fk_usuario_id',
+            'realizada',
+            'usuario_id',
+            'usuario',
+            'id',
+            'RESTRICT'
+        );
+
+        $this->addForeignKey(
+            'fk_curso_id',
+            'realizada',
+            'curso_id',
+            'curso',
+            'id',
+            'RESTRICT'
+        );
+
+        $this->addForeignKey(
+            'fk_ac_id',
+            'realizada',
+            'ac_id',
+            'ac',
+            'id',
+            'RESTRICT'
+        );
+
     }
 
     /**
@@ -26,9 +55,10 @@ class m240912_195449_realizada extends Migration
      */
     public function safeDown()
     {
-        echo "m240912_195449_realizada cannot be reverted.\n";
-
-        return false;
+        $this->dropForeignKey('fk_usuario_id', 'realizada');
+        $this->dropForeignKey('fk_curso_id', 'realizada');
+        $this->dropForeignKey('fk_ac_id', 'realizada');
+        $this->dropTable('realizada');
     }
 
     /*

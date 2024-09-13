@@ -27,9 +27,8 @@ class m240912_191140_ac extends Migration
      */
     public function safeDown()
     {
-        echo "m240912_191140_ac cannot be reverted.\n";
 
-        return false;
+        $this->dropTable('ac');
     }
 
     /*

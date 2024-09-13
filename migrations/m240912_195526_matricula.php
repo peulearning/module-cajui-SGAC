@@ -13,9 +13,13 @@ class m240912_195526_matricula extends Migration
     public function safeUp()
     {
         $this->createTable('matricula', [
-            'id' => $this->primaryKey(),
-            '' => $this->
+            'usuario_id' => $this->primaryKey(),
+            'curso_id' => $this->primaryKey(),
+            'data' => $this->date(),
+
         ]);
+        $this->addForeignKey('usuario_fk', 'matricula', 'usuario_id', 'usuario', 'id','RESTRICT');
+        $this->addForeignKey('curso_fk', 'matricula', 'curso_id', 'curso', 'id', 'RESTRICT');
     }
 
     /**
@@ -23,9 +27,9 @@ class m240912_195526_matricula extends Migration
      */
     public function safeDown()
     {
-        echo "m240912_195526_matricula cannot be reverted.\n";
-
-        return false;
+        $this->dropForeignKey('usuario_fk', 'matricula');
+        $this->dropForeignKey('curso_fk', 'matricula');
+        $this->dropTable('matricula');
     }
 
     /*
