@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m240912_191118_curso
+ * Handles the creation of table `{{%curso}}`.
  */
-class m240912_191118_curso extends Migration
+class m240914_173113_create_curso_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -23,9 +23,6 @@ class m240912_191118_curso extends Migration
         $this->addForeignKey('ac_fk', 'curso', 'ac_id', 'ac', 'id','RESTRICT');
     }
 
-
-
-
     /**
      * {@inheritdoc}
      */
@@ -35,18 +32,4 @@ class m240912_191118_curso extends Migration
        $this->dropTable('curso');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m240912_191118_curso cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

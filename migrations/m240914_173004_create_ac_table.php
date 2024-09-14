@@ -3,14 +3,13 @@
 use yii\db\Migration;
 
 /**
- * Class m240912_191140_ac
+ * Handles the creation of table `{{%ac}}`.
  */
-class m240912_191140_ac extends Migration
+class m240914_173004_create_ac_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
-
     public function safeUp()
     {
         $this->createTable('ac', [
@@ -18,7 +17,7 @@ class m240912_191140_ac extends Migration
             'nome'=> $this->string(),
             'descricao' => $this->text(),
             'carga_horaria' => $this->double(),
-            'quantidade' => $this->int()
+            'quantidade' => $this->integer()
         ]);
     }
 
@@ -30,19 +29,4 @@ class m240912_191140_ac extends Migration
 
         $this->dropTable('ac');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m240912_191140_ac cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }
