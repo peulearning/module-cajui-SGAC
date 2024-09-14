@@ -11,45 +11,106 @@ use yii\bootstrap5\Html;
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+<?php $this->beginContent('@app/views/layouts/main.php'); ?>
 
-    <p>Please fill out the following fields to login:</p>
+<style>
+    body {
+        background-color: #f0f0f0; /* Cor de fundo cinza */
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Ocupa toda a altura da viewport */
+    }
 
-    <div class="row">
-        <div class="col-lg-5">
+    .login-container {
+        background-color: white; /* Cor de fundo branco para o formulário */
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        max-width: 400px;
+        width: 100%;
+        margin: auto; /* Para centralizar horizontalmente */
+    }
 
-            <?php $form = ActiveForm::begin([
-                'id' => 'login-form',
-                'fieldConfig' => [
-                    'template' => "{label}\n{input}\n{error}",
-                    'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
-                    'inputOptions' => ['class' => 'col-lg-3 form-control'],
-                    'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
-                ],
-            ]); ?>
+    .logo {
+        text-align: center;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
 
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+    .logo img {
+        height: 50px;
+    }
 
-            <?= $form->field($model, 'password')->passwordInput() ?>
+    .form-control {
+        margin-bottom: 10px;
+    }
 
-            <?= $form->field($model, 'rememberMe')->checkbox([
-                'template' => "<div class=\"custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            ]) ?>
+    .login-button, .gov-button {
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+    }
 
-            <div class="form-group">
-                <div>
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-            </div>
+    .login-button {
+        background-color: #007bff;
+        color: white;
+    }
 
-            <?php ActiveForm::end(); ?>
+    .gov-button {
+        background-color: #28a745;
+        color: white;
+    }
 
-            <div style="color:#999;">
-                You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-                To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-            </div>
+    .links {
+        text-align: center;
+        margin-top: 15px;
+    }
 
+    .links a {
+        color: #007bff;
+        text-decoration: none;
+    }
+</style>
+
+<div class="container">
+    <div class="login-container">
+        <div class="logo">
+            <img src="<?= Yii::$app->request->baseUrl ?>/assets/img/ifnmg.png" alt="IFNMG Logo">
+            <img src="<?= Yii::$app->request->baseUrl ?>/assets/img/cajui.png" alt="Cajuí Logo">
         </div>
+        <?php $form = ActiveForm::begin([
+            'options' => ['class' => 'form'],
+        ]); ?>
+
+        <?= $form->field($model, 'username')->textInput(['placeholder' => 'Usuário'])->label(false) ?>
+
+        <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Senha'])->label(false) ?>
+
+        <div class="form-group">
+            <?= $form->field($model, 'rememberMe')->checkbox(['class' => 'form-check-input'])->label('Permanecer Conectado', ['class' => 'form-check-label']) ?>
+        </div>
+
+        <div class="form-group">
+            <?= Html::submitButton('Acessar', ['class' => 'login-button']) ?>
+        </div>
+
+        <?= Html::button('Entrar com o GOV.BR', ['class' => 'gov-button']) ?>
+
+        <div class="links">
+            <?= Html::a('Alterar Senha', ['site/request-password-reset']) ?> |
+            <?= Html::a('Recuperar Senha', ['site/request-password-reset']) ?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
     </div>
 </div>
+
+<?php $this->endContent(); ?>

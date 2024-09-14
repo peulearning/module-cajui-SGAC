@@ -4,11 +4,7 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
-use app\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
 
@@ -29,50 +25,58 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
-<header id="header">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/site/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
-    ]);
-    NavBar::end();
-    ?>
-</header>
+<!-- Removido o cabeçalho (navbar) -->
 
-<main id="main" class="flex-shrink-0" role="main">
-    <div class="container">
-        <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-        <?php endif ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
+<main role="main" class="flex-shrink-0">
+    <?= $content ?>
 </main>
 
-<footer id="footer" class="mt-auto py-3 bg-light">
+<style>
+  #footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.6); /* Ajuste a cor e a opacidade conforme necessário */
+    z-index: 1000;
+    border-top: 1px solid rgba(0, 0, 0, 0.1); /* Adiciona uma borda sutil para separar o rodapé do conteúdo */
+  }
+
+  .container {
+    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  main {
+    flex: 1;
+    padding-bottom: 60px; /* Ajuste conforme a altura do rodapé */
+  }
+</style>
+
+<footer id="footer" class="py-3 bg-light">
     <div class="container">
         <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
+            <div class="col-md-4 text-center text-md-start">
+                &copy; Gerência de Projetos IFNMG <?= date('Y') ?>
+            </div>
+            <div class="col-md-4 text-center text-md-start">
+                Versão 0.0.1 &nbsp;|&nbsp; Copyright © 2015 IFNMG. Todos direitos reservados
+            </div>
+            <div class="col-md-4 text-center text-md-end">
+                <?= Yii::powered() ?>
+            </div>
         </div>
     </div>
 </footer>

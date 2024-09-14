@@ -15,14 +15,14 @@ class m240914_173308_create_realizada_table extends Migration
         $this->createTable('realizada', [
             'usuario_id' => $this->integer()->notNull(),
             'curso_id' => $this->integer()->notNull(),
-            'ac_id' => $this->primaryKey(), // AUTO_INCREMENT já é implícito com primaryKey
+            'ac_id' => $this->integer()->notNull(), // AUTO_INCREMENT já é implícito com primaryKey
             'carga_horaria' => $this->double(),
             'documento' => $this->string(255)->notNull(),
             'descricao' => $this->string(255),
         ]);
 
         // Defina a chave primária composta, se necessário (sem AUTO_INCREMENT)
-        $this->addPrimaryKey('pk_realizada', 'realizada', ['usuario_id', 'curso_id']);
+        $this->addPrimaryKey('pk_realizada', 'realizada', ['usuario_id', 'curso_id','ac_id']);
 
         // Adicione as chaves estrangeiras, se necessário
         $this->addForeignKey('fk_usuario_realizada', 'realizada', 'usuario_id', 'usuario', 'id', 'CASCADE');
@@ -39,7 +39,7 @@ class m240914_173308_create_realizada_table extends Migration
         $this->dropForeignKey('fk_curso_realizada', 'realizada');
 
         // Remover a chave primária composta
-        $this->dropPrimaryKey('pk_realizada', 'realizada');
+        $this->dropPrimaryKey('pk_realizada', 'realizada', 'ac_id');
 
         // Remover a tabela
         $this->dropTable('realizada');
