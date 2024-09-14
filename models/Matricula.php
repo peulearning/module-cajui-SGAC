@@ -23,7 +23,6 @@ class Matricula extends \yii\db\ActiveRecord
     {
         return 'matricula';
     }
-3
     /**
      * {@inheritdoc}
      */
@@ -33,6 +32,7 @@ class Matricula extends \yii\db\ActiveRecord
             [['usuario_id', 'curso_id'], 'required'],
             [['usuario_id', 'curso_id'], 'integer'],
             [['data'], 'safe'],
+            [['data'], 'date', 'format' => 'php:Y-m-d'],
             [['usuario_id', 'curso_id'], 'unique', 'targetAttribute' => ['usuario_id', 'curso_id']],
             [['curso_id'], 'exist', 'skipOnError' => true, 'targetClass' => Curso::class, 'targetAttribute' => ['curso_id' => 'id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::class, 'targetAttribute' => ['usuario_id' => 'id']],
