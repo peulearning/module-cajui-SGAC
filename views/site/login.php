@@ -83,8 +83,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="container">
     <div class="login-container">
         <div class="logo">
-            <img src="/assets/img/ifnmg.png" alt="IFNMG Logo">
-            <img src="/assets/img/cajui.png" alt="Cajuí Logo">
+            <img src="<?= Yii::$app->request->baseUrl ?>/assets/img/ifnmg.png" alt="IFNMG Logo">
+            <img src="<?= Yii::$app->request->baseUrl ?>/assets/img/cajui.png" alt="Cajuí Logo">
         </div>
         <?php $form = ActiveForm::begin([
             'options' => ['class' => 'form'],
