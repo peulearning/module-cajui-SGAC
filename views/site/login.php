@@ -90,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'options' => ['class' => 'form'],
         ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['placeholder' => 'Usuário'])->label(false) ?>
+        <?= $form->field($model, 'login')->textInput(['placeholder' => 'Usuário'])->label(false) ?>
 
         <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Senha'])->label(false) ?>
 

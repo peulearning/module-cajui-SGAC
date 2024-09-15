@@ -61,7 +61,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(['login']);
     }
 
     /**
@@ -71,13 +71,15 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->render('index');
+        }
+
+        if(!Yii::$app->user->isGuest){
+            return $this->render('login',[
+                'model'=> $model,
+            ]);
         }
 
         $model->password = '';
@@ -95,7 +97,7 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->redirect(['site/login/']);
     }
 
     /**
@@ -103,26 +105,26 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+    //public function actionContact()
+   // {
+   //     $model = new ContactForm();
+  //      if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+  //          Yii::$app->session->setFlash('contactFormSubmitted');
 
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
+  //          return $this->refresh();
+  //      }
+  //      return $this->render('contact', [
+  //          'model' => $model,
+  //      ]);
+  //  }
 
     /**
      * Displays about page.
      *
      * @return string
      */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
+ //   public function actionAbout()
+//    {
+ //       return $this->render('about');
+ //   }
 }

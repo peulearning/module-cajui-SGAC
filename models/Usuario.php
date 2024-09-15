@@ -3,34 +3,19 @@
 namespace app\models;
 
 use Yii;
+use yii\web\IdentityInterface;
 
-/**
- * This is the model class for table "usuario".
- *
- * @property int $id
- * @property int $curso_id
- * @property string|null $login
- * @property string|null $senha
- * @property string $nome
- * @property string|null $cpf
- * @property string|null $email
- * @property string|null $endereco
- *
- * @property Curso $curso
- * @property Curso[] $cursos
- * @property Matricula[] $matriculas
- */
-class Usuario extends \yii\db\ActiveRecord
+class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
 {
-    /**
-     * {@inheritdoc}
-     */
+
+
     public static function tableName()
     {
-        return 'usuario';
+        return '{{%usuario}}';
     }
 
-    /**
+
+     /**
      * {@inheritdoc}
      */
     public function rules()
@@ -89,4 +74,49 @@ class Usuario extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Matricula::class, ['usuario_id' => 'id']);
     }
-}
+    // Métodos necessários da interface IdentityInterface
+    public static function findIdentity($id)
+    {
+        return self::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        // Implementar se você estiver usando tokens de acesso
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+       /**
+     * {@inheritdoc}
+     * No-op since we are not using authKey.
+     */
+    public function getAuthKey()
+    {
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     * No-op since we are not using authKey.
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $authKey === null;
+    }
+
+    public static function findByLogin($login)
+    {
+        return self::findOne(['login' => $login]);
+    }
+
+    public function validatePassword($password)
+    {
+        return $this->senha === $password; // Use hashing em produção
+    }
+
+    }
+

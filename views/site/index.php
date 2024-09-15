@@ -43,7 +43,7 @@ $this->title = 'Sistema de Gerenciamento de Atividades Complementares';
 
         <!-- Adicionando o botão de logout -->
         <p>
-            <?= Html::beginForm(['site/logout'], 'post')
+            <?= Html::beginForm(['site/logout/'], 'post')
                 . Html::submitButton('Logout', ['class' => 'btn btn-danger'])
                 . Html::endForm() ?>
         </p>
