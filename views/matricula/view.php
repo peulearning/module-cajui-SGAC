@@ -17,39 +17,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Matriculas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<?php
-    NavBar::begin([
-        'brandLabel' => "SGAC",
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-light navbar-expand-lg bg-gradient bg-warning']
-    ]);
-
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav ms-auto'],
-        
-        'items' => [
-            ['label' => 'ac', 'url' => ['/ac']],
-            ['label' => 'curso', 'url' => ['/curso']],
-            ['label' => 'matricula', 'url' => ['/matricula']],
-            ['label' => 'realizada', 'url' => ['/realizada']],
-            ['label' => 'usuario', 'url' => ['/usuario']],
-        
-            Yii::$app->user->isGuest
-                ? ['label' => 'Log in', 'url' => ['/site/login']]
-                : '<li class="nav-item ">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->nome . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
-    ]);
-
-
-    NavBar::end();
-    ?>
 <div class="matricula-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
