@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Usuario;
 
 class SiteController extends Controller
 {
@@ -73,8 +74,27 @@ class SiteController extends Controller
     {
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->render('index');
+            $dataProvider = new \yii\data\ActiveDataProvider([
+                'query' => Usuario::find()
+                    ->joinWith(['curso']),
+                'pagination' => [
+                    'pageSize' => 20,
+                ],
+                'sort' => [
+                    'defaultOrder' => [
+                        'nome' => SORT_ASC,
+                    ],
+                ],
+            ]);
+
+
+            return $this->render('index', [
+                'dataProvider' => $dataProvider,
+            ]);
         }
+
+
+
 
         if(!Yii::$app->user->isGuest){
             return $this->render('login',[

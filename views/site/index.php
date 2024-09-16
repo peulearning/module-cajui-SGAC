@@ -3,21 +3,19 @@
 /** @var yii\web\View $this */
 
 use yii\helpers\Html;
-use app\assets\AppAsset;
-use yii\bootstrap5\Html as Html2;
-use app\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
+use app\models\Usuario;
+use yii\helpers\Url;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
 
 $this->title = 'Sistema de Gerenciamento de Atividades Complementares';
 ?>
-    
+
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent mt-5 mb-5">
-        <h1 class="display-4"> Sistema do Cajuí </h1>
-
+        <h1 class="display-4"> Sistema do Cajuí de Atividades Complementares </h1>
+ <!--
         <p>
             <?= Html::beginForm(['ac/'], 'post')
                 . Html::submitButton('Atividades Complementares', ['class' => 'btn btn-primary'])
@@ -48,12 +46,48 @@ $this->title = 'Sistema de Gerenciamento de Atividades Complementares';
                 . Html::endForm() ?>
         </p>
 
-        <!-- Adicionando o botão de logout -->
+
         <p>
             <?= Html::beginForm(['site/logout/'], 'post')
                 . Html::submitButton('Logout', ['class' => 'btn btn-danger'])
                 . Html::endForm() ?>
-        </p>
+       </p> -->
+
+        <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        ///'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'attribute' => 'cursos',
+                'label' => 'Curso',
+                //'format' => 'raw',
+                //'options' => ['style' => 'width:15%;'],
+                'value' => 'curso.nome'
+            ],
+            [
+                'attribute' => 'acs',
+                'label' => 'AC',
+                //'format' => 'raw',
+                //'options' => ['style' => 'width:15%;'],
+                'value' => 'curso.ac.nome'
+            ],
+            // 'id',
+            // 'curso_id',
+            // 'login',
+            // 'senha',
+             'nome',
+            //'cpf',
+            //'email:email',
+            //'endereco',
+            [
+                'class' => ActionColumn::className(),
+                'urlCreator' => function ($action, Usuario $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'id' => $model->id]);
+                 }
+            ],
+        ],
+    ]); ?>
 
     </div>
 </div>

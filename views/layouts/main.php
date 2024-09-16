@@ -34,19 +34,19 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     NavBar::begin([
         'brandLabel' => "SGAC",
         'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-light navbar-expand-lg bg-gradient bg-warning']
+        'options' => ['class' => 'navbar-dark bg-dark navbar-expand-lg bg-gradient bg-warning']
     ]);
 
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav ms-auto'],
-        
+
         'items' => [
             ['label' => 'ac', 'url' => ['/ac']],
             ['label' => 'curso', 'url' => ['/curso']],
             ['label' => 'matricula', 'url' => ['/matricula']],
             ['label' => 'realizada', 'url' => ['/realizada']],
             ['label' => 'usuario', 'url' => ['/usuario']],
-        
+
             Yii::$app->user->isGuest
                 ? ['label' => 'Log in', 'url' => ['/site/login']]
                 : '<li class="nav-item ">'
@@ -63,7 +63,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
     NavBar::end();
     ?>
-    </header> 
+    </header>
 
 <!-- Removido o cabeçalho (navbar) -->
 

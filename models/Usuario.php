@@ -74,6 +74,8 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Matricula::class, ['usuario_id' => 'id']);
     }
+
+
     // Métodos necessários da interface IdentityInterface
     public static function findIdentity($id)
     {
