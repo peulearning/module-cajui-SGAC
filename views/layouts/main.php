@@ -29,53 +29,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
- <?php 
-  NavBar::begin(['brandLabel' => 'NavBar Test']);
-  echo Nav::widget([
-      'items' => [
-          ['label' => 'Home', 'url' => ['/site/index']],
-          ['label' => 'About', 'url' => ['/site/about']],
-      ],
-      'options' => ['class' => 'navbar-nav'],
-  ]);
-  NavBar::end();
- ?>
-
-<header id="header">
-    <?php
-    NavBar::begin([
-        'brandLabel' => "SGAC",
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-light navbar-expand-lg bg-gradient bg-warning']
-    ]);
-
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav ms-auto'],
-        
-        'items' => [
-            ['label' => 'ac', 'url' => ['/ac']],
-            ['label' => 'curso', 'url' => ['/curso']],
-            ['label' => 'matricula', 'url' => ['/matricula']],
-            ['label' => 'realizada', 'url' => ['/realizada']],
-            ['label' => 'usuario', 'url' => ['/usuario']],
-        
-            Yii::$app->user->isGuest
-                ? ['label' => 'Log in', 'url' => ['/site/login']]
-                : '<li class="nav-item ">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->nome . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
-    ]);
-
-
-    NavBar::end();
-    ?>
-    </header> 
 <!-- Removido o cabeçalho (navbar) -->
 
 <main role="main" class="flex-shrink-0">
