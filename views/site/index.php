@@ -58,6 +58,14 @@ $this->title = 'Sistema de Gerenciamento de Atividades Complementares';
         ///'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+             // 'id',
+            // 'curso_id',
+            // 'login',
+            // 'senha',
+            'nome',
+            //'cpf',
+            //'email:email',
+            //'endereco',
             [
                 'attribute' => 'cursos',
                 'label' => 'Curso',
@@ -72,14 +80,15 @@ $this->title = 'Sistema de Gerenciamento de Atividades Complementares';
                 //'options' => ['style' => 'width:15%;'],
                 'value' => 'curso.ac.nome'
             ],
-            // 'id',
-            // 'curso_id',
-            // 'login',
-            // 'senha',
-             'nome',
-            //'cpf',
-            //'email:email',
-            //'endereco',
+            [
+                'attribute' => 'acs',
+                'label' => 'Carga Horaria',
+                //'format' => 'raw',
+                //'options' => ['style' => 'width:15%;'],
+                'value' => 'curso.ac.carga_horaria',
+
+            ],
+
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Usuario $model, $key, $index, $column) {
