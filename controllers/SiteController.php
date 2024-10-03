@@ -10,6 +10,8 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Usuario;
+use app\models\User;
+use yii\data\ActiveDataProvider;
 
 class SiteController extends Controller
 {
@@ -61,40 +63,78 @@ class SiteController extends Controller
      * @return string
      */
     public function actionIndex()
-    {
-        return $this->redirect(['login']);
+{
+    // Verificar se o usuário já está logado
+    if (Yii::$app->user->isGuest) {
+        // Tentar logar o usuário baseado no cookie
+        $userID = Yii::$app->request->cookies->getValue('userID');
+        if ($userID) {
+            $user = Usuario::findOne($userID); // Utilize o seu modelo de usuário aqui
+            if ($user) {
+                Yii::$app->user->login($user);
+            }
+        }
     }
+
+    // Criar um DataProvider para a model Usuario
+    $dataProvider = new ActiveDataProvider([
+        'query' => Usuario::find(), // Ajuste a consulta conforme necessário
+        'pagination' => [
+            'pageSize' => 10, // Número de registros por página
+        ],
+    ]);
+
+    // Renderizar a view do índice e passar o DataProvider
+    return $this->render('index', [
+        'dataProvider' => $dataProvider, // Passa o DataProvider para a view
+    ]);
+}
+
 
     /**
      * Login action.
      *
      * @return Response|string
      */
+    // public function actionLogin()
+    // {
+    //     $model = new LoginForm();
+    //     if ($model->load(Yii::$app->request->post()) && $model->login()) {
+    //         $dataProvider = new \yii\data\ActiveDataProvider([
+    //             'query' => Usuario::find()
+    //                 ->joinWith(['curso']),
+    //             'pagination' => [
+    //                 'pageSize' => 20,
+    //             ],
+    //             'sort' => [
+    //                 'defaultOrder' => [
+    //                     'nome' => SORT_ASC,
+    //                 ],
+    //             ],
+    //         ]);
+
+
+    //         return $this->render('index', [
+    //             'dataProvider' => $dataProvider,
+    //         ]);
+    //     }
+
     public function actionLogin()
-    {
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            $dataProvider = new \yii\data\ActiveDataProvider([
-                'query' => Usuario::find()
-                    ->joinWith(['curso']),
-                'pagination' => [
-                    'pageSize' => 20,
-                ],
-                'sort' => [
-                    'defaultOrder' => [
-                        'nome' => SORT_ASC,
-                    ],
-                ],
-            ]);
+{
+    $model = new LoginForm();
+    if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        // Criar um cookie
+        $cookie = new \yii\web\Cookie([
+            'name' => 'userID',
+            'value' => $model->getUser()->id,
+            'expire' => time() + 3600 * 24 * 30, // 30 dias
+        ]);
+        Yii::$app->response->cookies->add($cookie);
 
+        return $this->redirect(['site/index']);
+    }
 
-            return $this->render('index', [
-                'dataProvider' => $dataProvider,
-            ]);
-        }
-
-
-
+    return $this->render('login', ['model' => $model]);
 
         if(!Yii::$app->user->isGuest){
             return $this->render('login',[

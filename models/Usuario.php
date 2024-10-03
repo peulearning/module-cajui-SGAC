@@ -7,15 +7,12 @@ use yii\web\IdentityInterface;
 
 class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
 {
-
-
     public static function tableName()
     {
         return '{{%usuario}}';
     }
 
-
-     /**
+    /**
      * {@inheritdoc}
      */
     public function rules()
@@ -25,6 +22,8 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
             [['curso_id'], 'integer'],
             [['login', 'senha', 'nome', 'cpf', 'email', 'endereco'], 'string', 'max' => 255],
             [['curso_id'], 'exist', 'skipOnError' => true, 'targetClass' => Curso::class, 'targetAttribute' => ['curso_id' => 'id']],
+            [['login'], 'unique'], // Adicionando regra para login único
+            [['email'], 'email'], // Validando formato de email
         ];
     }
 
@@ -39,7 +38,7 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
             'login' => 'Login',
             'senha' => 'Senha',
             'nome' => 'Nome',
-            'cpf' => 'Cpf',
+            'cpf' => 'CPF',
             'email' => 'Email',
             'endereco' => 'Endereco',
         ];
@@ -75,7 +74,6 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Matricula::class, ['usuario_id' => 'id']);
     }
 
-
     // Métodos necessários da interface IdentityInterface
     public static function findIdentity($id)
     {
@@ -85,6 +83,7 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
         // Implementar se você estiver usando tokens de acesso
+        return null; // Retornar null se não estiver implementado
     }
 
     public function getId()
@@ -92,13 +91,13 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->id;
     }
 
-       /**
+    /**
      * {@inheritdoc}
      * No-op since we are not using authKey.
      */
     public function getAuthKey()
     {
-        return null;
+        return null; // Retorna null já que authKey não é usado
     }
 
     /**
@@ -107,7 +106,7 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $authKey === null;
+        return $authKey === null; // Validação sempre retorna true
     }
 
     public static function findByLogin($login)
@@ -117,8 +116,7 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function validatePassword($password)
     {
-        return $this->senha === $password; // Use hashing em produção
+        // Comparação simples sem hashing
+        return $this->senha === $password; // Compare a senha fornecida com a senha armazenada
     }
-
-    }
-
+}
