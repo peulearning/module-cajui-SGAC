@@ -21,6 +21,16 @@ class UsuarioController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => \yii\filters\AccessControl::class,
+                    'only' => ['index', 'view', 'create', 'update', 'delete'], // Defina as ações que precisam de restrição de acesso
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'], // Somente usuários autenticados
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

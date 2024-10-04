@@ -17,19 +17,29 @@ class CursoController extends Controller
      * @inheritDoc
      */
     public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+{
+    return array_merge(
+        parent::behaviors(),
+        [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'], // Permitir apenas para usuários autenticados
                     ],
                 ],
-            ]
-        );
-    }
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ]
+    );
+}
 
     /**
      * Lists all Curso models.
